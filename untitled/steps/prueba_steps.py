@@ -379,21 +379,51 @@ class MySteps:
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-NEDAT[2,0]").text = fecha_manana_texto
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").setFocus
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").caretPosition = 0
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").text = "35"
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").setFocus
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").caretPosition = 2
+
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpSEL").select()
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG").select()
 
 
-        session.findById("wnd[0]").waitForExistence("usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRFA", 10)  # Espera hasta 10 segundos
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRFA").modifyCheckbox(0, "CHECKBOX", True)
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRZW").modifyCheckbox(0, "CHECKBOX", True)
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL").modifyCheckbox(0, "CHECKBOX", True)
-
-
-
+        time.sleep(3)
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRFA").selected = True
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRZW").selected = True
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL").selected = True
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL").setFocus
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI").select
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").text = "TRAN_BCI_CF02"
+
+
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI").select()
+        time.sleep(3)
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").text = "TRAN_SDER_IP01"
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").setFocus
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").caretPosition = 13
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpSTA").select
-        session.findById("wnd[1]/usr/btnSPOP-OPTION1").press
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").caretPosition = 14
+
+
+        session.findById("wnd[0]").maximize()
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").text = "TRAN_SDER_IP01"
+        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpSTA").select()
+        session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
+
+        session.findById("wnd[0]").maximize()
+        session.findById("wnd[0]").maximize
+        session.findById("wnd[0]/tbar[1]/btn[13]").press()
+        session.findById("wnd[1]/usr/chkF110V-XSTRF").selected = True
+        session.findById("wnd[1]/usr/chkF110V-XSTRF").setFocus
+        session.findById("wnd[1]/tbar[0]/btn[0]").press()
+        time.sleep(2)
+        session.findById("wnd[0]/tbar[1]/btn[14]").press()
+        time.sleep(2)
+        session.findById("wnd[0]/tbar[1]/btn[16]").press()
+        time.sleep(2)
+        session.findById("wnd[1]/tbar[0]/btn[13]").press()
+        time.sleep(2)
+        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setCurrentCell(4, "LIFNR")
+
+        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").selectedRows = [0]
+
+        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").doubleClickCurrentCell()
+        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").setCurrentCell(4, "BELNR")
+
+        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").selectedRows = "4"
