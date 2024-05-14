@@ -419,11 +419,42 @@ class MySteps:
         time.sleep(2)
         session.findById("wnd[1]/tbar[0]/btn[13]").press()
         time.sleep(2)
-        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setCurrentCell(4, "LIFNR")
 
-        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").selectedRows = [0]
 
+
+        # Establecer la columna actual en "EXCEPT2" en la tabla de la primera ventana
+        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setCurrentCell(0, "EXCEPT2")
+
+        # Seleccionar la primera fila en la tabla de la primera ventana
+        #session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setSelectedRows([0])
+        time.sleep(2)
+        # Hacer doble clic en la celda actual ppara desplegar toda la tabla
         session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").doubleClickCurrentCell()
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").setCurrentCell(4, "BELNR")
+        time.sleep(2)
 
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").selectedRows = "4"
+
+
+
+        # Establecer la fila actual en la fila 12 en la segunda tabla
+        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").currentCellRow = 16
+        time.sleep(2)
+        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").firstVisibleRow = 2
+        time.sleep(2)
+        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").selectedRows = "16"
+        time.sleep(2)
+        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").doubleClickCurrentCell()
+
+        session.findById("wnd[1]/tbar[0]/btn[6]").press()
+        time.sleep(2)
+        session.findById("wnd[2]/usr/ctxtREGUH-RZAWE").text = "E"
+        time.sleep(2)
+        session.findById("wnd[2]/usr/ctxtREGUH-HBKID").setFocus
+        session.findById("wnd[2]/usr/ctxtREGUH-HBKID").text = "BBCI"
+
+        time.sleep(2)
+        session.findById("wnd[3]/usr/lbl[1,7]").setFocus
+        session.findById("wnd[3]/usr/lbl[1,7]").text = "01601"
+
+
+        time.sleep(2)
+        session.findById("wnd[2]/tbar[0]/btn[13]").press()
