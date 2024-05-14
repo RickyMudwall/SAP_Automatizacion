@@ -401,8 +401,8 @@ class MySteps:
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").caretPosition = 14
 
 
-        session.findById("wnd[0]").maximize()
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").text = "TRAN_SDER_IP01"
+        #session.findById("wnd[0]").maximize()
+        #session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").text = "TRAN_SDER_IP01"
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpSTA").select()
         session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
@@ -436,11 +436,11 @@ class MySteps:
 
 
         # Establecer la fila actual en la fila 12 en la segunda tabla
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").currentCellRow = 16
+        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").currentCellRow = 20
         time.sleep(2)
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").firstVisibleRow = 2
         time.sleep(2)
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").selectedRows = "16"
+        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").selectedRows = "20"
         time.sleep(2)
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").doubleClickCurrentCell()
 
@@ -449,12 +449,12 @@ class MySteps:
         session.findById("wnd[2]/usr/ctxtREGUH-RZAWE").text = "E"
         time.sleep(2)
         session.findById("wnd[2]/usr/ctxtREGUH-HBKID").setFocus
-        session.findById("wnd[2]/usr/ctxtREGUH-HBKID").text = "BBCI"
+        session.findById("wnd[2]/usr/ctxtREGUH-HBKID").text = "SSTG"
 
         time.sleep(2)
-        session.findById("wnd[3]/usr/lbl[1,7]").setFocus
-        session.findById("wnd[3]/usr/lbl[1,7]").text = "01601"
-
-
+        session.findById("wnd[2]/usr/ctxtREGUH-HKTID").text = "03701"
+        #session.findById("wnd[2]/usr/ctxtF110O-FAEDT").text = "01.04.2024"
+        #session.findById("wnd[2]/usr/ctxtF110O-FAEDT").setFocus
+        #session.findById("wnd[2]/usr/ctxtF110O-FAEDT").caretPosition = 10
         time.sleep(2)
         session.findById("wnd[2]/tbar[0]/btn[13]").press()
