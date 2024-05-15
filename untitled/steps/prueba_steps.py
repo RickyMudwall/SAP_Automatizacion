@@ -435,7 +435,7 @@ class MySteps:
 
 
 
-        # Establecer la fila actual en la fila 12 en la segunda tabla
+        # Seleccion del documento a pagar
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").currentCellRow = 20
         time.sleep(2)
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").firstVisibleRow = 2
@@ -445,6 +445,8 @@ class MySteps:
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").doubleClickCurrentCell()
 
         session.findById("wnd[1]/tbar[0]/btn[6]").press()
+
+        #Configuracion de via de pago y configuracion final del doc a pagar
         time.sleep(2)
         session.findById("wnd[2]/usr/ctxtREGUH-RZAWE").text = "E"
         time.sleep(2)
@@ -458,3 +460,17 @@ class MySteps:
         #session.findById("wnd[2]/usr/ctxtF110O-FAEDT").caretPosition = 10
         time.sleep(2)
         session.findById("wnd[2]/tbar[0]/btn[13]").press()
+
+        #Seccion para ejecutar el pago
+        time.sleep(2)
+        session.findById("wnd[0]/tbar[0]/btn[11]").press()
+        time.sleep(1)
+        session.findById("wnd[0]/tbar[0]/btn[3]").press()
+        time.sleep(1)
+        session.findById("wnd[0]/tbar[0]/btn[3]").press()
+        time.sleep(1)
+        session.findById("wnd[0]/tbar[1]/btn[7]").press()
+        time.sleep(1)
+        session.findById("wnd[1]/tbar[0]/btn[0]").press()
+        time.sleep(1)
+        session.findById("wnd[0]/tbar[1]/btn[14]").press()
