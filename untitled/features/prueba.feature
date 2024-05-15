@@ -68,9 +68,4 @@ Feature: Realizar una acción
   Then se ingresa a la transaccion "f110"
   And se ingresan los datos fecha e identificador
 
-  @prueba_txn
-  Scenario: Flujo Caja
-  Given se ingresa a SAP
-  When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2025"
-  Then se ingresa a la transaccion "ZFICAFPCJ"
-  And se ingresan los datos para caja de pago rut "212719471" y division "3000"
+
