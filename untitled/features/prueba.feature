@@ -4,7 +4,7 @@ Feature: Realizar una acción
   @ZFICA0034
   Scenario: Proceso de contabilización PNCT
     Given se ingresa a SAP
-    When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2024"
+    When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2025"
     Then se ingresa a la transaccion "ZFICA0034"
     And se ingresan los datos para inscripcion del alumno
       | sociedad	| int_comercial	| clasific_inscripcion	| tp_objeto | id_objeto | monto_descuento	| año_academico | periodo_academico |
@@ -19,7 +19,7 @@ Feature: Realizar una acción
   @FPL9 @Regresion
   Scenario: Ver diferido
     Given se ingresa a SAP
-    When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2024"
+    When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2025"
     Then se ingresa a la transaccion "FPL9"
     And se busca el rut "212971057"
     And se selecciona el documento "590000186588"
@@ -41,7 +41,7 @@ Feature: Realizar una acción
   @ZFICAFPCJ @Regresion
   Scenario: Flujo Caja
     Given se ingresa a SAP
-    When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2024"
+    When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2025"
     Then se ingresa a la transaccion "ZFICAFPCJ"
     And se ingresan los datos para caja de pago rut "212719471" y division "3000"
     And se selecciona documento a pagar
@@ -59,18 +59,13 @@ Feature: Realizar una acción
   @setup_sap
   Scenario: Configurar el acceso a SAP
   Given se ingresa a SAP
-  When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2024"
+  When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2025"
 
   @pago_proveedores
   Scenario: Configurar el acceso a SAP
   Given se ingresa a SAP
-  When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2024"
+  When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2025"
   Then se ingresa a la transaccion "f110"
   And se ingresan los datos fecha e identificador
 
-  @prueba_txn
-  Scenario: Flujo Caja
-  Given se ingresa a SAP
-  When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2024"
-  Then se ingresa a la transaccion "ZFICAFPCJ"
-  And se ingresan los datos para caja de pago rut "212719471" y division "3000"
+
