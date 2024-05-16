@@ -67,5 +67,12 @@ Feature: Realizar una acción
   When se logea con el usuario "CNS_VERITY" y contraseña "Verity.2025"
   Then se ingresa a la transaccion "f110"
   And se ingresan los datos fecha e identificador
+  And se configura proceso 1 de pago
+  And se selecciona el pool de documentos del acreedor
+  And se selecciona el el documento a pagar
+  And se configura via de pago
+  And Se ejecuta el pago
+
+
 
 

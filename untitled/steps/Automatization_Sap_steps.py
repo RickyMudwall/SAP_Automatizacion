@@ -12,12 +12,6 @@ import pdb
 from datetime import datetime, timedelta
 
 
-# Calcular la fecha de mañana
-fecha_manana = datetime.now() + timedelta(days=1)
-
-# Formatear la fecha para SAP GUI
-fecha_manana_texto = fecha_manana.strftime("%d.%m.%Y")  # Formato 'DD.MM.YYYY'
-
 
 
 
@@ -31,26 +25,18 @@ fecha_hoy = f"{now.day}.{now.month}.{now.year}"  # Construye la fecha manualment
 
 hora_ahora = datetime.now().strftime("%d%m%Y%H%M%S")  # Formato 'DDMMYYYYHHMMSS'
 ultimos_cinco_digitos = hora_ahora[-5:]  # Extrae los últimos 5 dígitos
+
+
+# Calcular la fecha de mañana
 fecha_manana = datetime.now() + timedelta(days=1)
+
+# Formatear la fecha para SAP GUI
+fecha_manana_text = fecha_manana.strftime("%d.%m.%Y")  # Formato 'DD.MM.YYYY'
 
 
 class MySteps:
 
-    @given('se selecciona el icono windows')
-    def step_impl(context):
-        inst.clickelement(carpeta_imagenes_home, "win.png", 1)
 
-    @when('se selecciona el icono configuracion')
-    def step_impl(context):
-        inst.clickelement(carpeta_imagenes_home, "config.png", 2)
-
-    @then('se selecciona la opcion personalizacion')
-    def step_impl(context):
-        inst.clickelement(carpeta_imagenes_home, "personalizar.png", 2)
-
-    @then('cierre ventana')
-    def step_impl(context):
-        inst.sendkeys('alt', 'f4')
 
     @given('se ingresa a SAP')
     def step_impl(context):
@@ -364,28 +350,26 @@ class MySteps:
                 assert "Registro de pago" + var_medio_pago + " correcto" in campo_3, f"Campo 3 no contiene '{var_medio_pago}': {campo_3}"
 
 
+
+
     @then('se ingresan los datos fecha e identificador')
     def step_impl(context):
 
         assert inst.waitforelement(session, "wnd[0]/usr/ctxtF110V-LAUFD", 10)
-        session.findById("wnd[0]/usr/ctxtF110V-LAUFD").text = fecha_hoy
-        session.findById("wnd[0]/usr/ctxtF110V-LAUFI").setFocus()
-        session.findById("wnd[0]/usr/ctxtF110V-LAUFI").text = ultimos_cinco_digitos
-        session.findById("wnd[0]/usr/ctxtF110V-LAUFI").setFocus
-        session.findById("wnd[0]/usr/ctxtF110V-LAUFI").caretPosition = 5
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR").select()
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/txtF110V-BUKLS[0,0]").text = "IP01"
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-ZWELS[1,0]").text = "TEC"
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-NEDAT[2,0]").text = fecha_manana_texto
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").setFocus
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").caretPosition = 0
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").text = "35"
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").setFocus
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW").caretPosition = 2
 
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpSEL").select()
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG").select()
+        inst.set_text_sap(session, "0", "ctxtF110V-LAUFD", fecha_hoy)
+        inst.set_text_sap(session,"0", "ctxtF110V-LAUFI", ultimos_cinco_digitos)
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR")
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/txtF110V-BUKLS[0,0]", "IP01")
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-ZWELS[1,0]", "TEC")
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-NEDAT[2,0]", fecha_manana_text)
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW", "35")
 
+
+    @then('se configura proceso 1 de pago')
+    def step_impl(context):
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpSEL")
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpLOG")
 
         time.sleep(3)
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRFA").selected = True
@@ -393,35 +377,24 @@ class MySteps:
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL").selected = True
         session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL").setFocus
 
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpPRI")
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]", "TRAN_SDER_IP01")
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpSTA")
+        inst.press_field_sap(session, "1", "usr/btnSPOP-OPTION1")
+        inst.press_field_sap(session, "0", "tbar[1]/btn[13]")
 
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI").select()
-        time.sleep(3)
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").text = "TRAN_SDER_IP01"
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").setFocus
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").caretPosition = 14
-
-
-        #session.findById("wnd[0]").maximize()
-        #session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]").text = "TRAN_SDER_IP01"
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpSTA").select()
-        session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
-
-        session.findById("wnd[0]").maximize()
-        session.findById("wnd[0]").maximize
-        session.findById("wnd[0]/tbar[1]/btn[13]").press()
         session.findById("wnd[1]/usr/chkF110V-XSTRF").selected = True
         session.findById("wnd[1]/usr/chkF110V-XSTRF").setFocus
-        session.findById("wnd[1]/tbar[0]/btn[0]").press()
-        time.sleep(2)
-        session.findById("wnd[0]/tbar[1]/btn[14]").press()
-        time.sleep(2)
-        session.findById("wnd[0]/tbar[1]/btn[16]").press()
-        time.sleep(2)
-        session.findById("wnd[1]/tbar[0]/btn[13]").press()
-        time.sleep(2)
+
+        inst.press_field_sap(session, "1", "tbar[0]/btn[0]")
+        inst.press_field_sap(session, "0", "tbar[1]/btn[14]")
+        inst.press_field_sap(session, "0", "tbar[1]/btn[16]")
+        inst.press_field_sap(session, "1", "tbar[0]/btn[13]")
 
 
 
+    @then('se selecciona el pool de documentos del acreedor')
+    def step_impl(context):
         # Establecer la columna actual en "EXCEPT2" en la tabla de la primera ventana
         session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setCurrentCell(0, "EXCEPT2")
 
@@ -434,7 +407,8 @@ class MySteps:
 
 
 
-
+    @then('se selecciona el el documento a pagar')
+    def step_impl(context):
         # Seleccion del documento a pagar
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").currentCellRow = 20
         time.sleep(2)
@@ -444,33 +418,25 @@ class MySteps:
         time.sleep(2)
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").doubleClickCurrentCell()
 
-        session.findById("wnd[1]/tbar[0]/btn[6]").press()
+        #inst.select_doc_sap("0","usr/cntlCONTAINER_0112/shellcont/shell","1700001345")
+        #inst.press_field_sap(session, "1", "tbar[0]/btn[6]")
 
-        #Configuracion de via de pago y configuracion final del doc a pagar
-        time.sleep(2)
-        session.findById("wnd[2]/usr/ctxtREGUH-RZAWE").text = "E"
-        time.sleep(2)
-        session.findById("wnd[2]/usr/ctxtREGUH-HBKID").setFocus
-        session.findById("wnd[2]/usr/ctxtREGUH-HBKID").text = "SSTG"
 
-        time.sleep(2)
-        session.findById("wnd[2]/usr/ctxtREGUH-HKTID").text = "03701"
-        #session.findById("wnd[2]/usr/ctxtF110O-FAEDT").text = "01.04.2024"
-        #session.findById("wnd[2]/usr/ctxtF110O-FAEDT").setFocus
-        #session.findById("wnd[2]/usr/ctxtF110O-FAEDT").caretPosition = 10
-        time.sleep(2)
-        session.findById("wnd[2]/tbar[0]/btn[13]").press()
+    @then('se configura via de pago')
+    def step_impl(context):
 
+        inst.set_text_sap(session, "2", "ctxtREGUH-RZAWE", "E")
+        inst.set_text_sap(session, "2", "ctxtREGUH-HBKID", "SSTG")
+        inst.set_text_sap(session, "2", "ctxtREGUH-HKTID", "03701")
+        inst.press_field_sap(session, "2", "tbar[0]/btn[13]")
+
+
+    @then('Se ejecuta el pago')
+    def step_impl(context):
         #Seccion para ejecutar el pago
-        time.sleep(2)
-        session.findById("wnd[0]/tbar[0]/btn[11]").press()
-        time.sleep(1)
-        session.findById("wnd[0]/tbar[0]/btn[3]").press()
-        time.sleep(1)
-        session.findById("wnd[0]/tbar[0]/btn[3]").press()
-        time.sleep(1)
-        session.findById("wnd[0]/tbar[1]/btn[7]").press()
-        time.sleep(1)
-        session.findById("wnd[1]/tbar[0]/btn[0]").press()
-        time.sleep(1)
-        session.findById("wnd[0]/tbar[1]/btn[14]").press()
+        inst.press_field_sap(session, "0", "tbar[0]/btn[11]")
+        inst.press_field_sap(session, "0", "tbar[0]/btn[3]")
+        inst.press_field_sap(session, "0", "tbar[0]/btn[3]")
+        inst.press_field_sap(session, "0", "tbar[1]/btn[7]")
+        inst.press_field_sap(session, "1", "tbar[0]/btn[0]")
+        inst.press_field_sap(session, "0", "tbar[1]/btn[14]")
