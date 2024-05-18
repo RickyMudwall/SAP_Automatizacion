@@ -25,8 +25,19 @@ class BaseSteps:
         logging.info("Captura de pantalla")
         screenshot = pyautogui.screenshot()
         timestamp = int(time.time())
-        screenshot_filename = f"screenshot_{timestamp}.png"
-        screenshot_path = os.path.join(os.getcwd(), screenshot_filename)
+        screenshot_filename = f'screenshot_{timestamp}.png'
+
+        # Define the evidence directory
+        evidence_dir = os.path.join(os.getcwd(), 'evidence')
+
+        # Create the evidence directory if it doesn't exist
+        if not os.path.exists(evidence_dir):
+            os.makedirs(evidence_dir)
+
+        # Define the full path for the screenshot
+        screenshot_path = os.path.join(evidence_dir, screenshot_filename)
+
+        # Save the screenshot
         screenshot.save(screenshot_path)
 
     def set_text_sap(self, session, screen, field, text):
@@ -34,8 +45,8 @@ class BaseSteps:
         time.sleep(1)
         self.screenshot_evidence()
         path_screen = "wnd[" + screen + "]/usr/" + field
-        session.findById("wnd[" + screen + "]/usr/" + field).setFocus()
-        session.findById("wnd[" + screen + "]/usr/" + field).text = text
+        session.findById(path_screen).setFocus()
+        session.findById(path_screen).text = text
         time.sleep(1)
         self.screenshot_evidence()
 

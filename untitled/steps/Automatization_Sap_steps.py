@@ -353,17 +353,18 @@ class MySteps:
 
 
     @then('se ingresan los datos fecha e identificador "{cod_deudor}" "{via_pago}" "{cod_acreedor}"')
-    def step_impl(context):
+    def step_impl(context, cod_deudor, via_pago, cod_acreedor):
 
         assert inst.waitforelement(session, "wnd[0]/usr/ctxtF110V-LAUFD", 10)
 
         inst.set_text_sap(session, "0", "ctxtF110V-LAUFD", fecha_hoy)
         inst.set_text_sap(session,"0", "ctxtF110V-LAUFI", ultimos_cinco_digitos)
         inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR")
-        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/txtF110V-BUKLS[0,0]", "IP01")
-        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-ZWELS[1,0]", "TEC")
+
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/txtF110V-BUKLS[0,0]", cod_deudor )
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-ZWELS[1,0]", via_pago)
         inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-NEDAT[2,0]", fecha_manana_text)
-        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW", "35")
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW", cod_acreedor)
 
 
     @then('se configura proceso 1 de pago')
