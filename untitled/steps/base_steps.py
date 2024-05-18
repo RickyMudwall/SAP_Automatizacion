@@ -55,19 +55,34 @@ class BaseSteps:
         time.sleep(1)
         self.screenshot_evidence()
 
+    def checkbox_sap(self, session, screen, field):
+        time.sleep(1)
+        self.screenshot_evidence()
+        path_screen = "wnd[" + screen + "]/usr/" + field
+        session.findById(path_screen).selected = True
+        #time.sleep(1)
+        self.screenshot_evidence()
 
-    def select_doc_sap(self, session, screen, field, doc):
+
+
+    def select_doc_sap(self, session, text):
+        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setCurrentCell(0, "EXCEPT2")
+        time.sleep(1)
+        # Hacer doble clic en la celda actual ppara desplegar toda la tabla
+        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").doubleClickCurrentCell()
+
         time.sleep(1)
         self.screenshot_evidence()  # Asume que esta función captura correctamente la pantalla.
 
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").pressToolbarButton("&FIND")
-        session.findById("wnd[1]/usr/chkGS_SEARCH-EXACT_WORD").selected = true
-        session.findById("wnd[" + screen + "]/" + field).text = doc
+        session.findById("wnd[1]/usr/chkGS_SEARCH-EXACT_WORD").selected = True
+        session.findById("wnd[1]/usr/txtGS_SEARCH-VALUE").setFocus()
+        session.findById("wnd[1]/usr/txtGS_SEARCH-VALUE").text = text
         session.findById("wnd[1]/usr/cmbGS_SEARCH-SEARCH_ORDER").key = "0"
         session.findById("wnd[1]/usr/chkGS_SEARCH-EXACT_WORD").setFocus()
         session.findById("wnd[1]/tbar[0]/btn[0]").press()
         session.findById("wnd[1]/tbar[0]/btn[12]").press()
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").doubleClickCurrentCell
+        session.findById("wnd[0]/tbar[1]/btn[5]").press()
 
         time.sleep(1)
         self.screenshot_evidence()  # Captura final para evidencia

@@ -352,7 +352,7 @@ class MySteps:
 
 
 
-    @then('se ingresan los datos fecha e identificador')
+    @then('se ingresan los datos fecha e identificador "{cod_deudor}" "{via_pago}" "{cod_acreedor}"')
     def step_impl(context):
 
         assert inst.waitforelement(session, "wnd[0]/usr/ctxtF110V-LAUFD", 10)
@@ -371,11 +371,10 @@ class MySteps:
         inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpSEL")
         inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpLOG")
 
-        time.sleep(3)
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRFA").selected = True
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRZW").selected = True
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL").selected = True
-        session.findById("wnd[0]/usr/tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL").setFocus
+        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRFA")
+        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRZW")
+        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL")
+        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL")
 
         inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpPRI")
         inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]", "TRAN_SDER_IP01")
@@ -383,8 +382,7 @@ class MySteps:
         inst.press_field_sap(session, "1", "usr/btnSPOP-OPTION1")
         inst.press_field_sap(session, "0", "tbar[1]/btn[13]")
 
-        session.findById("wnd[1]/usr/chkF110V-XSTRF").selected = True
-        session.findById("wnd[1]/usr/chkF110V-XSTRF").setFocus
+        inst.checkbox_sap(session,"1","chkF110V-XSTRF")
 
         inst.press_field_sap(session, "1", "tbar[0]/btn[0]")
         inst.press_field_sap(session, "0", "tbar[1]/btn[14]")
@@ -392,42 +390,19 @@ class MySteps:
         inst.press_field_sap(session, "1", "tbar[0]/btn[13]")
 
 
-
-    @then('se selecciona el pool de documentos del acreedor')
-    def step_impl(context):
-        # Establecer la columna actual en "EXCEPT2" en la tabla de la primera ventana
-        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setCurrentCell(0, "EXCEPT2")
-
-        # Seleccionar la primera fila en la tabla de la primera ventana
-        #session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setSelectedRows([0])
-        time.sleep(2)
-        # Hacer doble clic en la celda actual ppara desplegar toda la tabla
-        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").doubleClickCurrentCell()
-        time.sleep(2)
-
-
-
-    @then('se selecciona el el documento a pagar')
-    def step_impl(context):
+    @then('se selecciona el documento a pagar "{documento_pago}"')
+    def step_impl(context, documento_pago):
         # Seleccion del documento a pagar
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").currentCellRow = 20
-        time.sleep(2)
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").firstVisibleRow = 2
-        time.sleep(2)
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").selectedRows = "20"
-        time.sleep(2)
-        session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").doubleClickCurrentCell()
-
-        #inst.select_doc_sap("0","usr/cntlCONTAINER_0112/shellcont/shell","1700001345")
-        #inst.press_field_sap(session, "1", "tbar[0]/btn[6]")
+        inst.select_doc_sap(session, documento_pago)
+        inst.press_field_sap(session, "1", "tbar[0]/btn[6]")
 
 
-    @then('se configura via de pago')
-    def step_impl(context):
+    @then('se configura via de pago "{tipo_pago}" "{banco}" "{cuenta}"')
+    def step_impl(context, tipo_pago, banco, cuenta):
 
-        inst.set_text_sap(session, "2", "ctxtREGUH-RZAWE", "E")
-        inst.set_text_sap(session, "2", "ctxtREGUH-HBKID", "SSTG")
-        inst.set_text_sap(session, "2", "ctxtREGUH-HKTID", "03701")
+        inst.set_text_sap(session, "2", "ctxtREGUH-RZAWE", tipo_pago)
+        inst.set_text_sap(session, "2", "ctxtREGUH-HBKID", banco)
+        inst.set_text_sap(session, "2", "ctxtREGUH-HKTID", cuenta)
         inst.press_field_sap(session, "2", "tbar[0]/btn[13]")
 
 
