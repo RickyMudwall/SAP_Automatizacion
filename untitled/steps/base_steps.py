@@ -15,11 +15,47 @@ class BaseSteps:
         pass
 
     def sendkeys(self, *keys):
+        # Convertir todos los argumentos a cadenas
+        keys = [str(key) for key in keys]
         time.sleep(1)
         self.screenshot_evidence()
         pyautogui.hotkey(*keys)
         time.sleep(1)
         self.screenshot_evidence()
+
+    def read_file_and_check(self, filename):
+        try:
+            return_lines = []
+            with open(filename, "r") as file:
+                for line in file:
+                    data = line.strip().split(';')
+                    if data and data[-1] == '':
+                        return_lines = data
+                        return return_lines
+            return []
+        except FileNotFoundError:
+            print(f"The file '{filename}' was not found.")
+            return []
+        except Exception as e:
+            print(f"Error while reading the file '{filename}': {e}")
+            return []
+
+    def update_file_and_rewrite(filename, search_value):
+        try:
+            updated_lines = []
+            with open(filename, "r") as file:
+                for line in file:
+                    data = line.strip().split(';')
+                    if data and data[0] == search_value:
+                        data[-1] = "PAGADO"
+                    updated_lines.append(';'.join(data) + '\n')
+
+            with open(filename, "w") as file:
+                file.writelines(updated_lines)
+        except FileNotFoundError:
+            print(f"The file '{filename}' was not found.")
+        except Exception as e:
+            print(f"Error while updating the file '{filename}': {e}")
 
     def screenshot_evidence(self):
         logging.info("Captura de pantalla")
@@ -77,6 +113,8 @@ class BaseSteps:
 
 
     def select_doc_sap(self, session, text):
+        time.sleep(1)
+        session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").selectedRows = "0"
         session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setCurrentCell(0, "EXCEPT2")
         time.sleep(1)
         # Hacer doble clic en la celda actual ppara desplegar toda la tabla
@@ -115,3 +153,4 @@ class BaseSteps:
             time.sleep(0.5)
 
         return False
+
