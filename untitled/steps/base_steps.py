@@ -57,6 +57,26 @@ class BaseSteps:
         except Exception as e:
             print(f"Error while updating the file '{filename}': {e}")
 
+    def screenshot_evidence(self, section):
+        logging.info(f"Captura de pantalla - Sección: {section}")
+        screenshot = pyautogui.screenshot()
+        timestamp = int(time.time())
+        screenshot_filename = f'{section}_screenshot_{timestamp}.png'
+
+        # Define the evidence directory
+        evidence_dir = os.path.join(os.getcwd(), 'evidence')
+
+        # Create the evidence directory if it doesn't exist
+        if not os.path.exists(evidence_dir):
+            os.makedirs(evidence_dir)
+
+        # Define the full path for the screenshot
+        screenshot_path = os.path.join(evidence_dir, screenshot_filename)
+
+        # Save the screenshot
+        screenshot.save(screenshot_path)
+
+    """
     def screenshot_evidence(self):
         logging.info("Captura de pantalla")
         screenshot = pyautogui.screenshot()
@@ -75,44 +95,46 @@ class BaseSteps:
 
         # Save the screenshot
         screenshot.save(screenshot_path)
+    """
 
-    def set_text_sap(self, session, screen, field, text):
+
+    def set_text_sap(self, session, screen, field, text, section):
 
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
         path_screen = "wnd[" + screen + "]/usr/" + field
         session.findById(path_screen).setFocus()
         session.findById(path_screen).text = text
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
 
-    def select_field_sap(self, session, screen, field):
+    def select_field_sap(self, session, screen, field, section):
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
         path_screen = "wnd[" + screen + "]/usr/" + field
         session.findById(path_screen).select()
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
 
-    def press_field_sap(self, session, screen, field):
+    def press_field_sap(self, session, screen, field, section):
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
         path_screen = "wnd[" + screen + "]/" + field
         session.findById(path_screen).press()
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
 
-    def checkbox_sap(self, session, screen, field):
+    def checkbox_sap(self, session, screen, field, section):
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
         path_screen = "wnd[" + screen + "]/usr/" + field
         session.findById(path_screen).selected = True
         #time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
 
 
 
-    def select_doc_sap(self, session, text):
+    def select_doc_sap(self, session, text, section):
         time.sleep(1)
         session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").selectedRows = "0"
         session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").setCurrentCell(0, "EXCEPT2")
@@ -121,7 +143,7 @@ class BaseSteps:
         session.findById("wnd[0]/usr/cntlCONTAINER_0111/shellcont/shell").doubleClickCurrentCell()
 
         time.sleep(1)
-        self.screenshot_evidence()  # Asume que esta función captura correctamente la pantalla.
+        self.screenshot_evidence(section)  # Asume que esta función captura correctamente la pantalla.
 
         session.findById("wnd[0]/usr/cntlCONTAINER_0112/shellcont/shell").pressToolbarButton("&FIND")
         session.findById("wnd[1]/usr/chkGS_SEARCH-EXACT_WORD").selected = True
@@ -134,7 +156,7 @@ class BaseSteps:
         session.findById("wnd[0]/tbar[1]/btn[5]").press()
 
         time.sleep(1)
-        self.screenshot_evidence()  # Captura final para evidencia
+        self.screenshot_evidence(section)  # Captura final para evidencia
 
 
 

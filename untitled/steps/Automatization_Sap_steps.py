@@ -2,9 +2,10 @@ import allure
 import pyperclip
 from behave import given, when, then
 from base_steps import BaseSteps
+from resumme_steps import GenerationSummary
 import logging
 import time
-
+import os
 import win32com.client
 import subprocess
 import sys
@@ -173,71 +174,88 @@ class MySteps:
 
     @then('se ingresan los datos fecha e identificador')
     def step_impl(context):
-        #llamar al metodo aqui
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'fecha e identificador'
 
         assert inst.waitforelement(session, "wnd[0]/usr/ctxtF110V-LAUFD", 10)
 
-        inst.set_text_sap(session, "0", "ctxtF110V-LAUFD", fecha_hoy)
-        inst.set_text_sap(session,"0", "ctxtF110V-LAUFI", ultimos_cinco_digitos)
-        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR")
+        inst.set_text_sap(session, "0", "ctxtF110V-LAUFD", fecha_hoy, section)
+        inst.set_text_sap(session,"0", "ctxtF110V-LAUFI", ultimos_cinco_digitos, section)
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR", section)
 
-        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/txtF110V-BUKLS[0,0]", cod_deudor )
-        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-ZWELS[1,0]", via_pago)
-        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-NEDAT[2,0]", fecha_manana_text)
-        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW", cod_acreedor)
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/txtF110V-BUKLS[0,0]", cod_deudor, section)
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-ZWELS[1,0]", via_pago, section)
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/tblSAPF110VCTRL_FKTTAB/ctxtF110V-NEDAT[2,0]", fecha_manana_text, section)
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW", cod_acreedor, section)
 
 
     @then('se configura proceso 1 de pago')
     def step_impl(context):
-        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpSEL")
-        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpLOG")
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'se configura proceso 1 de pago'
 
-        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRFA")
-        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRZW")
-        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL")
-        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL")
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpSEL", section)
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpLOG", section)
 
-        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpPRI")
-        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]", "TRAN_SDER_IP01")
-        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpSTA")
-        inst.press_field_sap(session, "1", "usr/btnSPOP-OPTION1")
-        inst.press_field_sap(session, "0", "tbar[1]/btn[13]")
+        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRFA", section)
+        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRZW", section)
+        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL", section)
+        inst.checkbox_sap(session,"0","tabsF110_TABSTRIP/tabpLOG/ssubSUBSCREEN_BODY:SAPF110V:0204/chkF110V-XTRBL", section)
 
-        inst.checkbox_sap(session,"1","chkF110V-XSTRF")
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpPRI", section)
+        inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPRI/ssubSUBSCREEN_BODY:SAPF110V:0205/tblSAPF110VCTRL_DRPTAB/ctxtF110V-VARI1[1,4]", "TRAN_SDER_IP01", section)
+        inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpSTA", section)
+        inst.press_field_sap(session, "1", "usr/btnSPOP-OPTION1", section)
+        inst.press_field_sap(session, "0", "tbar[1]/btn[13]", section)
 
-        inst.press_field_sap(session, "1", "tbar[0]/btn[0]")
-        inst.press_field_sap(session, "0", "tbar[1]/btn[14]")
-        inst.press_field_sap(session, "0", "tbar[1]/btn[16]")
-        inst.press_field_sap(session, "1", "tbar[0]/btn[13]")
+        inst.checkbox_sap(session,"1","chkF110V-XSTRF", section)
+
+        inst.press_field_sap(session, "1", "tbar[0]/btn[0]", section)
+        inst.press_field_sap(session, "0", "tbar[1]/btn[14]", section)
+        inst.press_field_sap(session, "0", "tbar[1]/btn[16]", section)
+        inst.press_field_sap(session, "1", "tbar[0]/btn[13]", section)
 
 
     @then('se selecciona el documento a pagar')
     def step_impl(context):
-        # Seleccion del documento a pagar
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'se selecciona el documento a pagar'
 
 
-        inst.select_doc_sap(session, num_doc)
-        inst.press_field_sap(session, "1", "tbar[0]/btn[6]")
+        inst.select_doc_sap(session, num_doc, section)
+        inst.press_field_sap(session, "1", "tbar[0]/btn[6]", section)
 
 
     @then('se configura via de pago')
     def step_impl(context):
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'se configura via de pago'
 
-        inst.set_text_sap(session, "2", "ctxtREGUH-RZAWE", tipo_pago)
-        inst.set_text_sap(session, "2", "ctxtREGUH-HBKID", banco)
-        inst.set_text_sap(session, "2", "ctxtREGUH-HKTID", cuenta)
-        inst.press_field_sap(session, "2", "tbar[0]/btn[13]")
+        inst.set_text_sap(session, "2", "ctxtREGUH-RZAWE", tipo_pago, section)
+        inst.set_text_sap(session, "2", "ctxtREGUH-HBKID", banco, section)
+        inst.set_text_sap(session, "2", "ctxtREGUH-HKTID", cuenta, section)
+        inst.press_field_sap(session, "2", "tbar[0]/btn[13]", section)
 
 
     @then('Se ejecuta el pago')
     def step_impl(context):
-        #Seccion para ejecutar el pago
-        inst.press_field_sap(session, "0", "tbar[0]/btn[11]")
-        inst.press_field_sap(session, "0", "tbar[0]/btn[3]")
-        inst.press_field_sap(session, "0", "tbar[0]/btn[3]")
-        inst.press_field_sap(session, "0", "tbar[1]/btn[7]")
-        inst.press_field_sap(session, "1", "tbar[0]/btn[0]")
-        inst.press_field_sap(session, "0", "tbar[1]/btn[14]")
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'Se ejecuta el pago'
+
+        inst.press_field_sap(session, "0", "tbar[0]/btn[11]", section)
+        inst.press_field_sap(session, "0", "tbar[0]/btn[3]", section)
+        inst.press_field_sap(session, "0", "tbar[0]/btn[3]", section)
+        inst.press_field_sap(session, "0", "tbar[1]/btn[7]", section)
+        inst.press_field_sap(session, "1", "tbar[0]/btn[0]", section)
+        inst.press_field_sap(session, "0", "tbar[1]/btn[14]", section)
 
         #inst.update_file_and_rewrite("facturas.txt", num_doc)
         MySteps.update_file_and_rewrite("facturas.txt", num_doc)
+
+
+    @then('se genera el reporte final')
+    def step_impl(context):
+
+        summary = GenerationSummary()  # Crea una instancia de GenerationSummary
+        report_path = summary.generation_summary_report()  # Genera el informe
+        print(f"Reporte generado en: {report_path}")  # Imprime la ruta del informe generado

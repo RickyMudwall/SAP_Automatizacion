@@ -19,6 +19,7 @@ Feature: Realizar una acción
   And se configura via de pago
   And Se ejecuta el pago
   And se cierra sap
+  And se genera el reporte final
 
 
 
