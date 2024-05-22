@@ -85,8 +85,10 @@ class MySteps:
             print(f"Error while updating the file '{filename}': {e}")
 
 
-    @given('se ingresa a SAP')
+    @given('Se ingresa a SAP')
     def step_impl(context):
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'Startup Sap'
         global session
 
 
@@ -116,20 +118,24 @@ class MySteps:
             application = None
             SapGuiAuto = None
             return
+        inst.screenshot_evidence(section)
 
-    @when('se logea con el usuario "{usuario}" y contraseña "{password}"')
+
+    @when('Se logea con el usuario "{usuario}" y contraseña "{password}"')
     def step_impl(context, usuario, password):
+
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'Login'
         with allure.step("Comprobar Ventana"):
             allure.attach("Comprobar Ventana", name="Comprobar Ventana", attachment_type=allure.attachment_type.TEXT)
             assert inst.waitforelement(session, "wnd[0]", 10)
         session.findById("wnd[0]").maximize()
-        session.findById("wnd[0]/usr/txtRSYST-BNAME").text = usuario
-        session.findById("wnd[0]/usr/pwdRSYST-BCODE").text = password
-        session.findById("wnd[0]/usr/pwdRSYST-BCODE").setFocus()
-        session.findById("wnd[0]/usr/pwdRSYST-BCODE").caretPosition = 12
+
+        inst.set_text_sap(session, "0", "txtRSYST-BNAME", usuario, section)
+        inst.set_text_sap(session, "0", "pwdRSYST-BCODE", password, section)
         session.findById("wnd[0]").sendVKey(0)
 
-        #breakpoint()
+
 
         if inst.waitforelement(session, "wnd[1]/usr/radMULTI_LOGON_OPT2", 5):
             print("El elemento está disponible!")
@@ -142,12 +148,16 @@ class MySteps:
         assert inst.waitforelement(session, "wnd[0]/usr/btnBTN_CNC", 10)
         session.findById("wnd[0]/usr/btnBTN_CNC").press()
 
-    @then('se ingresa a la transaccion "{trx}"')
+    @then('Se ingresa a la transaccion "{trx}"')
     def step_impl(context, trx):
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'Se ingresa a la transaccion'
         with allure.step("Se comprueba la barra de transacciones"):
             allure.attach("Se comprueba la barra de transacciones", name="Se comprueba la barra de transacciones", attachment_type=allure.attachment_type.TEXT)
             assert inst.waitforelement(session, "wnd[0]/tbar[0]/okcd", 10)
-        session.findById("wnd[0]/tbar[0]/okcd").text = trx
+
+        inst.set_text_sap_v2(session, "0", "tbar[0]/okcd", trx, section)
+        #session.findById("wnd[0]/tbar[0]/okcd").text = trx
         session.findById("wnd[0]").sendVKey(0)
 
 
@@ -155,11 +165,14 @@ class MySteps:
 
 
 
-    @then('se cierra sap')
+    @then('Se cierra sap')
     def step_impl(context):
-        assert inst.waitforelement(session, "wnd[0]/tbar[0]/btn[15]", 10)
 
-        session.findById("wnd[0]/tbar[0]/btn[15]").press()
+        # Llamar a screenshot_evidence con la sección adecuada
+        section = 'Shutdown sap'
+        assert inst.waitforelement(session, "wnd[0]/tbar[0]/btn[15]", 10)
+        inst.press_field_sap(session, "0", "tbar[0]/btn[15]", section)
+        #session.findById("wnd[0]/tbar[0]/btn[15]").press()
 
         assert inst.waitforelement(session, "wnd[0]", 10)
 
@@ -167,15 +180,15 @@ class MySteps:
         session.findById("wnd[0]").close()
 
         assert inst.waitforelement(session, "wnd[1]/usr/btnSPOP-OPTION1", 10)
+        inst.press_field_sap(session, "1", "usr/btnSPOP-OPTION1", section)
+        #session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
-        session.findById("wnd[1]/usr/btnSPOP-OPTION1").press()
 
 
-
-    @then('se ingresan los datos fecha e identificador')
+    @then('Se ingresan fecha e identificadores de txn')
     def step_impl(context):
         # Llamar a screenshot_evidence con la sección adecuada
-        section = 'fecha e identificador'
+        section = 'Fecha e identificadores de txn'
 
         assert inst.waitforelement(session, "wnd[0]/usr/ctxtF110V-LAUFD", 10)
 
@@ -189,10 +202,10 @@ class MySteps:
         inst.set_text_sap(session, "0", "tabsF110_TABSTRIP/tabpPAR/ssubSUBSCREEN_BODY:SAPF110V:0202/subSUBSCR_SEL:SAPF110V:7004/ctxtR_LIFNR-LOW", cod_acreedor, section)
 
 
-    @then('se configura proceso 1 de pago')
+    @then('Se configura proceso previo de pago')
     def step_impl(context):
         # Llamar a screenshot_evidence con la sección adecuada
-        section = 'se configura proceso 1 de pago'
+        section = 'Configuracion previa pago'
 
         inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpSEL", section)
         inst.select_field_sap(session, "0", "tabsF110_TABSTRIP/tabpLOG", section)
@@ -216,20 +229,20 @@ class MySteps:
         inst.press_field_sap(session, "1", "tbar[0]/btn[13]", section)
 
 
-    @then('se selecciona el documento a pagar')
+    @then('Se selecciona el documento a pagar')
     def step_impl(context):
         # Llamar a screenshot_evidence con la sección adecuada
-        section = 'se selecciona el documento a pagar'
+        section = 'Selección de documento a pagar'
 
 
         inst.select_doc_sap(session, num_doc, section)
         inst.press_field_sap(session, "1", "tbar[0]/btn[6]", section)
 
 
-    @then('se configura via de pago')
+    @then('Se configura via de pago')
     def step_impl(context):
         # Llamar a screenshot_evidence con la sección adecuada
-        section = 'se configura via de pago'
+        section = 'Vía de pago'
 
         inst.set_text_sap(session, "2", "ctxtREGUH-RZAWE", tipo_pago, section)
         inst.set_text_sap(session, "2", "ctxtREGUH-HBKID", banco, section)
@@ -240,7 +253,7 @@ class MySteps:
     @then('Se ejecuta el pago')
     def step_impl(context):
         # Llamar a screenshot_evidence con la sección adecuada
-        section = 'Se ejecuta el pago'
+        section = 'Ejecución de pago'
 
         inst.press_field_sap(session, "0", "tbar[0]/btn[11]", section)
         inst.press_field_sap(session, "0", "tbar[0]/btn[3]", section)
@@ -249,11 +262,10 @@ class MySteps:
         inst.press_field_sap(session, "1", "tbar[0]/btn[0]", section)
         inst.press_field_sap(session, "0", "tbar[1]/btn[14]", section)
 
-        #inst.update_file_and_rewrite("facturas.txt", num_doc)
         MySteps.update_file_and_rewrite("facturas.txt", num_doc)
 
 
-    @then('se genera el reporte final')
+    @then('Se genera el reporte final')
     def step_impl(context):
 
         summary = GenerationSummary()  # Crea una instancia de GenerationSummary

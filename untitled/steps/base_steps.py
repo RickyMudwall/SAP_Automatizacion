@@ -14,14 +14,14 @@ class BaseSteps:
     def __init__(self):
         pass
 
-    def sendkeys(self, *keys):
+    def sendkeys(self, *keys, section):
         # Convertir todos los argumentos a cadenas
         keys = [str(key) for key in keys]
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
         pyautogui.hotkey(*keys)
         time.sleep(1)
-        self.screenshot_evidence()
+        self.screenshot_evidence(section)
 
     def read_file_and_check(self, filename):
         try:
@@ -103,6 +103,16 @@ class BaseSteps:
         time.sleep(1)
         self.screenshot_evidence(section)
         path_screen = "wnd[" + screen + "]/usr/" + field
+        session.findById(path_screen).setFocus()
+        session.findById(path_screen).text = text
+        time.sleep(1)
+        self.screenshot_evidence(section)
+
+    def set_text_sap_v2(self, session, screen, field, text, section):
+
+        time.sleep(1)
+        self.screenshot_evidence(section)
+        path_screen = "wnd[" + screen + "]/" + field
         session.findById(path_screen).setFocus()
         session.findById(path_screen).text = text
         time.sleep(1)
